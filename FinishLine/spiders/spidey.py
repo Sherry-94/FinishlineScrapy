@@ -16,8 +16,7 @@ class mySpider(BaseSpider):
     allowed_domains = ["finishline.com"]
 
     start_urls = ['http://www.finishline.com/store/shop/men/shoes/_/N-33id6?categoryId=cat301564&mnid=men_shoes#SignUp']
-                  #'http://www.finishline.com/store/product/men-s-nike-hyperdunk-2015-basketball-shoes?categoryId=cat304231&productId=prod776492']
-
+       
     def itemPage(self, response):
         hxs = HtmlXPathSelector(response)
         item = FinishlineItem()
