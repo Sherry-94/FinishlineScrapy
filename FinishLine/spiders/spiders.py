@@ -20,8 +20,6 @@ class mySpider(BaseSpider):
 
     allowed_domains = ["finishline.com"]
 
-    #file = open("input.txt")
-    #start_urls = ['http://www.flipkart.com/transcendence-my-spiritual-experiences-pramukh-swamiji-english/p/itme7k42wn3bms2w?pid=9789351774051']
     start_urls = ['http://www.finishline.com/store/shop/men/shoes/_/N-33id6?categoryId=cat301564&mnid=men_shoes',
                   'http://www.finishline.com/store/shop/kids/girls-shoes/_/N-33iev?categoryId=cat301672&mnid=kids_girlsshoes',
                   'http://www.finishline.com/store/shop/kids/boys-shoes/_/N-33iei?categoryId=cat301666&mnid=kids_boysshoes',
@@ -31,26 +29,12 @@ class mySpider(BaseSpider):
 
         print "reached"
 
-        #item = stockItem()
         items = []
 
-
-
-        #shoesColorPath = '//div[@id="styleColors"]/span[@class="description"]/text()'
-        #shoesColor = response.selector.xpath(shoesColorPath).extract()
-        #print shoesColor
-        #item['Colour'] = shoesColor
-
-        #print "available"
         shoesSizesPath = '//div[@id="productSizes"]/div[@class="size"]/text()'
         shoesSizes = response.selector.xpath(shoesSizesPath).extract()
 
-        #for shoesSize in shoesSizes:
-            #print shoesSize
 
-        #print "unavaliable"
-
-        #shoesSizesUnPath = '//div[@id="productSizes"]'
         shoesSizesUnPath = '//div[@id="productSizes"]/div[@class="size unavailable"]/text()'
         shoesSizesUn = response.selector.xpath(shoesSizesUnPath).extract()
         #print (len(shoesSizesUn))
@@ -63,9 +47,6 @@ class mySpider(BaseSpider):
         #shoesType = Selector(text=shoesType).xpath('//span/text()').extract()
 
         for shoeModel in shoesModel:
-            #print shoeModel
-            #print len(shoeModel)
-            #print "yahooooooo"
 
                 for shoesSize in shoesSizes:
                     item = stockItem()
@@ -176,39 +157,17 @@ class mySpider(BaseSpider):
                         item['Availability'] = "unAvailable"
                         items.append(item)
 
-
-
-
-
-
-
-
-
-
-
         return items
-        #for i in range(len(shoesSizesUn)):
-            #if 'class="size unavailable"' in shoesSizesUn:
-                #print "true"
-                #print shoesSizesUn[i]
-
-
-
-        #print "hi"
 
     def nextPage(self, response):
 
         shoesPath = '//div[@class="product-container"]/a/@href'
         shoes = response.selector.xpath(shoesPath).extract()
-        #for shoe in shoes:
-            #print shoe
-        #print "requesting"
+     
         for shoe in shoes:
             myRequest = Request("http://www.finishline.com" + shoes.pop(0), callback=self.shoePage)
 
             yield myRequest
-
-
 
 
 
@@ -225,11 +184,3 @@ class mySpider(BaseSpider):
             else:
                 myRequest = Request(url, callback=self.nextPage)
             yield myRequest
-
-
-
-        #CatergoriesPath = '//ul[@class="drp-nav-list"]/li/a/@href'
-        #Catergories = response.selector.xpath(CatergoriesPath).extract()
-        #for Catergory in Catergories:
-            #print Catergory
-
